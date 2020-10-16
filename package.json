@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/apmorris83/zeta-electrical/issues"
   },
-  "homepage": "https://github.com/apmorris83/zeta-electrical#readme"
+  "homepage": "https://github.com/apmorris83/zeta-electrical#readme",
+  "dependencies": {
+    "gatsby": "^2.24.79",
+    "gatsby-plugin-react-helmet": "^3.3.14",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-helmet": "^6.1.0"
+  }
 }
