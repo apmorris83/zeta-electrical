@@ -27,5 +27,6 @@ module.exports = {
         icon: `src/images/ze-icon.svg`,
       },
     },
+    `gatsby-plugin-sass`
   ],
 }

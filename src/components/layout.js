@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 import Header from '../components/header.js';
 import "./layout.css"
+import "../pages/style.scss"
 
 const Layout = ({ children }) => {
   return (
