@@ -1,10 +1,16 @@
 import React from "react"
 import PropTypes from "prop-types"
 
+import Header from '../components/header.js';
 import "./layout.css"
 
 const Layout = ({ children }) => {
-  return <main>{children}</main>
+  return (
+    <>
+      <Header/>
+      <main>{children}</main>
+    </>
+  )
 }
 
 Layout.propTypes = {
