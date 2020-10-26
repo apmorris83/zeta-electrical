@@ -2,14 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 
 import Header from '../components/header.js';
-import "./layout.css"
-import "../pages/style.scss"
 
 const Layout = ({ children }) => {
   return (
     <>
       <Header/>
-      <main>{children}</main>
+      <main className="pt-20 bg-gray-500 h-auto">
+        {children}
+      </main>
     </>
   )
 }
