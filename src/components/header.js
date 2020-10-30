@@ -1,16 +1,30 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { Link } from 'gatsby';
 
 const Header = () => {
   const [top, setTop] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
+  const [burgerActive, setBurgerActive] = useState(false);
+  const [resourcesActive, setResourcesActive] = useState(false);
+  const navRef = useRef([]);
 
   useEffect(() => {
     const scrollHandler = () => {
       window.pageYOffset > 10 ? setTop(false) : setTop(true)
     };
+    const escHandler = (e) => {
+      if(e.keyCode === 27) setResourcesActive(false);
+    };
+    const focusHandler = () => {
+      if(navRef.current.includes(document.activeElement)) setResourcesActive(false);
+    }
     window.addEventListener('scroll', scrollHandler);
-    return () => window.removeEventListener('scroll', scrollHandler);
+    window.addEventListener('keydown', escHandler);
+    window.addEventListener('focusin', focusHandler);
+    return () => {
+      window.removeEventListener('scroll', scrollHandler);
+      window.removeEventListener('keydown', escHandler);
+      window.removeEventListener('focusin', focusHandler);
+    }
   }, [top]);
 
   return (
@@ -25,19 +39,36 @@ const Header = () => {
             </Link>
           </div>
           <div className="sm:hidden">
-            <button type="button" onClick={() => setIsOpen(!isOpen)} className="text-yellow-800 hover:text-yellow-600 focus:text-black focus:outline-none focus:shadow-outline focus:border-blue-300">
-              <svg className="fill-current h-6 w-4" viewBox="0 0 59 49">
-                {isOpen ?
-                  <path d="M29.5,19.761L47.89,1.372C49.124,0.138 51.125,0.139 52.359,1.372C53.594,2.607 53.594,4.608 52.36,5.842L33.97,24.232L52.361,42.622C53.595,43.856 53.594,45.858 52.36,47.092C51.125,48.326 49.124,48.326 47.89,47.093L29.5,28.702L11.111,47.091L11.112,47.092C9.876,48.327 7.875,48.327 6.64,47.092C5.406,45.858 5.405,43.856 6.64,42.621L25.03,24.232L6.641,5.844L6.641,5.844C5.405,4.609 5.405,2.608 6.641,1.372C7.875,0.139 9.876,0.138 11.111,1.372L29.5,19.761Z"/> :
-                  <path d="M3.162,48.465C1.415,48.465 0,47.049 0,45.303C0,43.558 1.415,42.143 3.162,42.143L55.84,42.143C57.586,42.143 59.002,43.558 59.002,45.303C59.002,47.049 57.586,48.465 55.84,48.465L3.162,48.465ZM3.162,27.394C1.415,27.394 0,25.979 0,24.232C0,22.487 1.415,21.071 3.161,21.071L55.84,21.071C57.585,21.071 59,22.487 59,24.232C59,25.978 57.585,27.393 55.84,27.393L3.162,27.393L3.162,27.394ZM3.161,6.322C1.416,6.322 0,4.906 0,3.161C0,1.415 1.416,0 3.161,0L55.841,0C57.586,0 59.002,1.415 59.002,3.161C59.002,4.906 57.586,6.322 55.841,6.322L3.161,6.322Z"/>}
+            <button type="button" onClick={() => setBurgerActive(!burgerActive)} className="text-yellow-800 hover:text-yellow-600 focus:text-black focus:outline-none focus:shadow-outline focus:border-blue-300">
+              <svg className="fill-current h-5 w-5" viewBox="0 0 20 20">
+                {burgerActive ?
+                  <path d="M10,8.485L18.171,0.314C18.589,-0.105 19.268,-0.105 19.686,0.314C20.105,0.732 20.105,1.411 19.686,1.829L11.515,10L19.686,18.171C20.104,18.589 20.105,19.268 19.686,19.686C19.268,20.105 18.589,20.105 18.171,19.686L10,11.515L1.829,19.686C1.411,20.104 0.732,20.105 0.314,19.686C-0.105,19.268 -0.105,18.589 0.314,18.171L8.485,10L0.314,1.829C-0.105,1.411 -0.105,0.732 0.314,0.314C0.732,-0.105 1.411,-0.105 1.829,0.314L10,8.485Z"/> :
+                  <path d="M1.072,20C0.48,20 0,19.52 0,18.928C0,18.337 0.48,17.857 1.072,17.857L18.928,17.857C19.52,17.857 20,18.337 20,18.928C20,19.52 19.52,20 18.928,20L1.072,20ZM1.072,11.071C0.48,11.071 0,10.592 0,10C0,9.408 0.48,8.929 1.072,8.929L18.928,8.929C19.52,8.929 20,9.408 20,10C20,10.592 19.52,11.071 18.928,11.071L1.072,11.071ZM1.072,2.143C0.48,2.143 0,1.663 0,1.071C0,0.48 0.48,0 1.072,0L18.928,0C19.52,0 20,0.48 20,1.071C20,1.663 19.52,2.143 18.928,2.143L1.072,2.143Z"/>}
               </svg>
             </button>
           </div>
         </div>
-        <div className={`${isOpen ? 'block' : 'hidden'} px-2 pt-2 pb-4 max-w-6xl sm:flex sm:items-center sm:pt-4 sm:space-x-4`}>
-          <a href="#" className="block rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">About</a>
-          <a href="#" className="block rounded mt-2 sm:mt-0 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">Contact</a>
-        </div>
+        <nav className={`${burgerActive ? 'block' : 'hidden'} px-4 pt-2 pb-4 max-w-6xl sm:flex sm:items-center sm:pt-4 sm:space-x-6`}>
+          <Link to="/about" className="block rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">About</Link>
+          <a href="#" ref={(el) => navRef.current.push(el)} className="block rounded mt-2 sm:mt-0 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">Contact</a>
+          <div className="relative block mt-2 sm:mt-0">
+            <button onClick={() => setResourcesActive(!resourcesActive)} onFocus={() => setResourcesActive(true)} className="flex items-center justify-between relative z-10 w-full block rounded hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">
+              Resources
+              <svg className={`ml-2 fill-current h-3 w-3 sm:h-2 sm:w-2 transform ${resourcesActive ? 'rotate-180' : ''}`} viewBox="0 0 20 20">
+                <path d="M0.322,5.439C-0.097,5.021 -0.097,4.342 0.322,3.924C0.74,3.505 1.419,3.505 1.837,3.924L10,12.087L18.163,3.924C18.581,3.505 19.26,3.506 19.678,3.924C20.097,4.342 20.097,5.021 19.678,5.439L10.852,14.265C10.825,14.3 10.796,14.333 10.764,14.365C10.558,14.571 10.29,14.675 10.02,14.679C9.737,14.686 9.452,14.581 9.237,14.366C9.205,14.334 9.175,14.3 9.148,14.265L0.322,5.439Z"/>
+              </svg>
+            </button>
+            {resourcesActive ? <button onClick={() => setResourcesActive(false)} tabIndex="-1" className="hidden sm:fixed sm:block inset-0 h-full w-full cursor-default"></button> : null}
+            {resourcesActive ? 
+              <div className="mt-2 sm:bg-white border-black-1 rounded-lg sm:p-2 sm:shadow-xl static sm:w-48 sm:absolute sm:right-0">
+                <a href="#" className="block rounded px-2 sm:px-4 py-2 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300">Help</a>
+                <a href="#" className="block rounded px-2 sm:px-4 py-2 mt-2 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300">Blog</a>
+                <a href="#" className="block rounded px-2 sm:px-4 py-2 mt-2 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300">Contact</a>
+              </div>
+            : null}
+          </div>
+          <a href="#" ref={(el) => navRef.current.push(el)} className="block rounded mt-2 sm:mt-0 hover:bg-gray-200 focus:bg-gray-200 focus:outline-none focus:shadow-outline focus:border-blue-300 px-2 py-2">Help</a>
+        </nav>
       </div>
     </header>
   )
