@@ -5,16 +5,6 @@ module.exports = {
     author: `Mogg`,
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -27,6 +17,16 @@ module.exports = {
         icon: `src/images/ze-icon.svg`,
       },
     },
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`,
+      },
+    },
+    `gatsby-transformer-sharp`,
+    `gatsby-plugin-sharp`,
     `gatsby-plugin-postcss`,
     {
       resolve: "gatsby-plugin-react-svg",
