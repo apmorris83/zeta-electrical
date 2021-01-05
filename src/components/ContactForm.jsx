@@ -104,7 +104,7 @@ const ContactForm = () => {
       await fetch(
         "https://24n8449164.execute-api.eu-west-1.amazonaws.com/prod",
         {
-          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          method: "POST",
           mode: "cors", // no-cors, *cors, same-origin
           cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
           credentials: "same-origin", // include, *same-origin, omit
