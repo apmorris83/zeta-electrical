@@ -17,6 +17,7 @@ const ZetaHeader = () => {
 
   const scrollToSection = selector => {
     document.querySelector(selector).scrollIntoView({ behavior: "smooth" })
+    setBurgerActive(false)
     if (selector === ".contact") {
       document.querySelector(".contact-input").focus({ preventScroll: true })
     }
