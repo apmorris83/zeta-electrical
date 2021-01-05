@@ -81,17 +81,44 @@ const ContactForm = () => {
       },
     })
     if (!hasErrors()) {
-      setSubmitting(true)
-      // post form details
-      console.log(
-        Object.keys(form).reduce((acc, cur) => {
-          acc[cur] = form[cur].value
-          return acc
-        }, {})
+      setSubmitting()
+      sendFormData()
+        .then(() => {
+          console.log("success")
+          setSubmitting(false)
+          onClear()
+        })
+        .catch(err => {
+          console.log(err)
+          setSubmitting(false)
+        })
+    }
+  }
+
+  const sendFormData = async () => {
+    const data = Object.keys(form).reduce((acc, cur) => {
+      acc[cur] = form[cur].value
+      return acc
+    }, {})
+    try {
+      await fetch(
+        "https://24n8449164.execute-api.eu-west-1.amazonaws.com/prod",
+        {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data), // body data type must match "Content-Type" header
+        }
       )
-      // on successful post, clear and add notification
-      setSubmitting(false)
-      onClear()
+    } catch (error) {
+      throw error
     }
   }
 
