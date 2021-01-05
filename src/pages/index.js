@@ -86,7 +86,7 @@ const Index = () => {
           </div>
         </div>
       </Section>
-      <Section section="services" width="5xl">
+      <Section section="services" width="6xl">
         <h1 className="mb-8 text-center text-3xl lg:text-5xl font-sans font-light text-gray-600">
           Services
         </h1>
@@ -140,7 +140,7 @@ const Index = () => {
           ))}
         </div>
       </Section>
-      <Section section="recent-work" width="5xl" color>
+      <Section section="recent-work" width="6xl" color>
         <h1 className="mb-8 text-center text-3xl lg:text-5xl font-sans font-light text-gray-600">
           Recent work
         </h1>
