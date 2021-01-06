@@ -1,4 +1,7 @@
 import React from "react"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
+
 import Layout from "../components/Layout.jsx"
 import SEO from "../components/Seo.jsx"
 import Section from "../components/Section.jsx"
@@ -16,10 +19,10 @@ import ConsumerUnit from "../images/consumer-unit.svg"
 import Rewires from "../images/rewires.svg"
 import CctvInstall from "../images/cctv-install.svg"
 
-const Index = () => {
+const Index = ({ data }) => {
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="Quality service for your domestic electrical needs" />
       <Section section="contact" width="4xl">
         <h1 className="mb-8 text-center text-3xl lg:text-5xl font-sans font-light text-gray-600">
           For all your domestic electrical needs
@@ -38,7 +41,7 @@ const Index = () => {
         <h1 className="mb-8 text-center text-3xl lg:text-5xl font-sans font-light text-gray-600">
           About Zeta Electrical
         </h1>
-        <div className="max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto flex flex-col items-center">
           <p className="text-center text-lg font-sans font-light text-gray-600">
             Zeta Electrical are providers of a quality service for your domestic
             electrical needs. As a registered member of NAPIT, you can be
@@ -51,6 +54,11 @@ const Index = () => {
             light, additional socket or a full change of fuse board/consumer
             unit, Zeta Electrical can help.
           </p>
+          <Img
+            fixed={data.file.childImageSharp.fixed}
+            className="mt-10"
+            alt="Napit UKAS logo"
+          />
           <h2 className="mb-16 mt-16 sm:mt-32 text-center text-2xl lg:text-3xl font-sans font-light text-gray-600">
             Zeta Electrical provides:
           </h2>
@@ -151,5 +159,17 @@ const Index = () => {
     </Layout>
   )
 }
+
+export const query = graphql`
+  query {
+    file(relativePath: { eq: "napit-logo.png" }) {
+      childImageSharp {
+        fixed(width: 200, height: 116) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
 
 export default Index
