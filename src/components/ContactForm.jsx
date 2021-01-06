@@ -10,6 +10,7 @@ const ContactForm = () => {
   }
   const [form, setForm] = useState(initialForm)
   const [submitting, setSubmitting] = useState(false)
+  const [showThankyou, setShowThankyou] = useState(false)
   const updateForm = (field, val) => {
     setForm({
       ...form,
@@ -41,6 +42,7 @@ const ContactForm = () => {
     })
   }
   const onFocus = e => {
+    setShowThankyou(false)
     updateForm(e.target.name, { touched: true })
   }
   const onBlur = e => {
@@ -81,11 +83,11 @@ const ContactForm = () => {
       },
     })
     if (!hasErrors()) {
-      setSubmitting()
+      setSubmitting(true)
       sendFormData()
         .then(() => {
-          console.log("success")
           setSubmitting(false)
+          setShowThankyou(true)
           onClear()
         })
         .catch(err => {
@@ -105,16 +107,15 @@ const ContactForm = () => {
         "https://24n8449164.execute-api.eu-west-1.amazonaws.com/prod",
         {
           method: "POST",
-          mode: "cors", // no-cors, *cors, same-origin
-          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: "same-origin", // include, *same-origin, omit
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
           headers: {
             "Content-Type": "application/json",
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-          redirect: "follow", // manual, *follow, error
-          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-          body: JSON.stringify(data), // body data type must match "Content-Type" header
+          redirect: "follow",
+          referrerPolicy: "no-referrer",
+          body: JSON.stringify(data),
         }
       )
     } catch (error) {
@@ -181,6 +182,11 @@ const ContactForm = () => {
       >
         Send
       </button>
+      {showThankyou ? (
+        <p className="mt-4 text-center text-lg font-sans font-light text-gray-600">
+          Thanks for submitting, we'll be in touch soon.
+        </p>
+      ) : null}
     </form>
   )
 }
