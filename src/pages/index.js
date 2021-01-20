@@ -55,7 +55,7 @@ const Index = ({ data }) => {
             unit, Zeta Electrical can help.
           </p>
           <Img
-            fixed={data.file.childImageSharp.fixed}
+            fixed={data.napitLogo.childImageSharp.fixed}
             className="mt-10"
             alt="Napit UKAS logo"
           />
@@ -155,6 +155,50 @@ const Index = ({ data }) => {
         <p className="text-center text-lg font-sans font-light text-gray-600">
           Here's some of our latest work.
         </p>
+        <div className="gallery mt-32">
+          {[
+            {
+              name: "securityLight",
+              alt: "Security light fitted on an external brick wall",
+            },
+            {
+              name: "beforeAfterOne",
+              alt: "Before and after photo of an electrical board",
+              beforeAfter: true,
+            },
+            {
+              name: "beforeAfterTwo",
+              alt: "Before and after photo of an electrical board",
+              beforeAfter: true,
+            },
+            {
+              name: "newBoard",
+              alt: "New electrical board",
+            },
+            {
+              name: "kitchenLightFitting",
+              alt: "Kitchen light fitting",
+            },
+          ].map(image => (
+            <div className={`${image.name} relative`} key={image.name}>
+              <Img
+                fixed={data[image.name].childImageSharp.fluid}
+                className="h-full w-full"
+                alt={image.alt}
+              />
+              {image.beforeAfter ? (
+                <>
+                  <p className="absolute top-0 left-0 py-2 px-4 text-md font-sans font-light text-white bg-gray-900">
+                    Before
+                  </p>
+                  <p className="absolute bottom-0 right-0 py-2 px-4 text-md font-sans font-light text-white bg-gray-900">
+                    After
+                  </p>
+                </>
+              ) : null}
+            </div>
+          ))}
+        </div>
       </Section>
     </Layout>
   )
@@ -162,10 +206,47 @@ const Index = ({ data }) => {
 
 export const query = graphql`
   query {
-    file(relativePath: { eq: "napit-logo.png" }) {
+    napitLogo: file(relativePath: { eq: "napit-logo.png" }) {
       childImageSharp {
         fixed(width: 200, height: 116) {
           ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    securityLight: file(relativePath: { eq: "security-lighting.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    beforeAfterOne: file(relativePath: { eq: "before-after-one.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    beforeAfterTwo: file(relativePath: { eq: "before-after-two.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    newBoard: file(relativePath: { eq: "new-board.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    kitchenLightFitting: file(
+      relativePath: { eq: "kitchen-light-fitting.png" }
+    ) {
+      childImageSharp {
+        fluid(maxWidth: 1000) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
